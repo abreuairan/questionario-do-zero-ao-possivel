@@ -1,0 +1,699 @@
+/* ============================================================
+   QUESTIONÁRIO - cartões em sanfona, liberados conforme as respostas
+
+   Este arquivo é carregado DEPOIS do style.css e só vale para a seção
+   do questionário (a <section> dela tem a classe "pagina-questionario").
+   Para trocar cores, mexa nas variáveis logo abaixo.
+   ============================================================ */
+
+.pagina-questionario {
+    --q-fundo: #FBF4DC;      /* fundo da página */
+    --q-cartao: #FFFDF6;     /* fundo dos cartões */
+    --q-borda: #DDD5BA;      /* borda dos cartões */
+    --q-sombra: #E0D9C0;     /* sombra "dura" dos cartões */
+    --q-ouro: #C8971A;       /* números 01, 02, 03... */
+    --q-amarelo: #F2CD5C;    /* amarelo oficial */
+    --q-tinta: #0D0D0D;      /* preto oficial */
+    --q-suave: #4A473D;      /* textos secundários */
+    --q-realce: #FFF0BC;     /* opção selecionada */
+
+    /* ARREDONDAMENTO: 0px = quadrado; números maiores = mais redondo */
+    --q-raio-cartao: 0px;    /* os cartões grandes (mude para 22px para arredondar) */
+    --q-raio-opcao: 14px;    /* as caixinhas de resposta */
+    --q-raio-campo: 12px;    /* campos de texto */
+
+    background-color: var(--q-fundo);
+    /* PADRÃO DE CONEXÕES: a imagem static/fundo-conexoes.jpg se repete (espelhada, sem emendas visíveis) */
+    background-image: url("fundo-conexoes.jpg");
+    background-size: 1100px auto;        /* tamanho de cada "azulejo" no PC */
+    background-repeat: repeat;
+    color: var(--q-tinta);
+    font-family: 'Montserrat', sans-serif;
+}
+
+.so-leitores {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
+/* ---------- barra de progresso (BLOCO X DE 5) ---------- */
+.pagina-questionario .barra-progresso {
+    position: sticky;
+    top: 0;                       /* o JavaScript ajusta para ficar logo abaixo do menu */
+    z-index: 40;
+    background: #111111;
+    color: #ffffff;
+    height: 52px;
+    line-height: 52px;
+    padding: 0 5vw 0 66px;            /* o espaço da esquerda é para o botão ☰ */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.pagina-questionario .barra-progresso .barra-fill {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 0%;
+    background: var(--q-amarelo);
+    transition: width 0.5s ease;
+}
+
+/* ---------- área do questionário ---------- */
+.pagina-questionario .questionario {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 44px 28px 90px;
+}
+
+.pagina-questionario .questionario-intro {
+    max-width: 640px;
+    margin: 0 auto 40px;
+    text-align: center;
+    font-family: 'Lora', serif;
+    font-size: 1.12rem;
+    line-height: 1.65;
+    color: var(--q-suave);
+}
+
+/* ---------- cartão (bloco) ---------- */
+.pagina-questionario details.bloco {
+    background: var(--q-cartao);
+    border: 1px solid var(--q-borda);
+    border-radius: var(--q-raio-cartao);
+    margin: 0 8px 28px 0;                 /* espaço para a sombra dura */
+    box-shadow: 8px 8px 0 var(--q-sombra);
+    scroll-margin-top: calc(var(--altura-topo, 110px) + 16px);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+
+@media (hover: hover) {
+    .pagina-questionario details.bloco:not(.bloqueado):not([open]):hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 10px 10px 0 var(--q-sombra);
+    }
+}
+
+.pagina-questionario .bloco > summary {
+    display: grid;
+    grid-template-columns: 72px 1fr 32px;
+    align-items: center;
+    padding: 26px 28px;
+    cursor: pointer;
+    list-style: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1rem;
+    color: var(--q-tinta);
+    user-select: none;
+}
+
+.pagina-questionario .bloco > summary:hover { color: var(--q-tinta); }
+.pagina-questionario .bloco > summary::-webkit-details-marker { display: none; }
+.pagina-questionario .bloco > summary::marker { content: ''; }
+.pagina-questionario .bloco[open] > summary { padding-bottom: 18px; }
+
+.pagina-questionario .bloco > summary:focus-visible {
+    outline: 3px solid var(--q-amarelo);
+    outline-offset: -3px;
+}
+
+/* número 01, 02... (vira um "check" quando o bloco está respondido) */
+.pagina-questionario .bloco-num {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 34px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: var(--q-ouro);
+}
+
+.pagina-questionario .bloco-num .ok {
+    display: none;
+    width: 34px;
+    height: 34px;
+    padding: 7px;
+    box-sizing: border-box;
+    border-radius: 50%;
+    background: var(--q-amarelo);
+    color: var(--q-tinta);
+}
+
+.pagina-questionario .bloco.concluido .bloco-num .n { display: none; }
+.pagina-questionario .bloco.concluido .bloco-num .ok { display: block; }
+
+/* título e subtítulo */
+.pagina-questionario .bloco-titulo strong {
+    display: block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.35rem, 2.4vw, 1.95rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+}
+
+.pagina-questionario .bloco-titulo .sub,
+.pagina-questionario .bloco-titulo .aviso {
+    display: block;
+    margin-top: 6px;
+    font-family: 'Lora', serif;
+    font-size: 0.88rem;
+    font-weight: 400;
+    line-height: 1.4;
+    color: var(--q-suave);
+}
+
+.pagina-questionario .bloco-titulo .aviso { display: none; font-style: italic; }
+.pagina-questionario .bloco.bloqueado .bloco-titulo .sub { display: none; }
+.pagina-questionario .bloco.bloqueado .bloco-titulo .aviso { display: block; }
+
+/* seta (ou cadeado) à direita */
+.pagina-questionario .bloco-icone {
+    justify-self: end;
+    position: relative;
+    width: 24px;
+    height: 24px;
+}
+
+.pagina-questionario .bloco-icone::before {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 5px;
+    width: 9px;
+    height: 9px;
+    border-right: 2.5px solid currentColor;
+    border-bottom: 2.5px solid currentColor;
+    transform: rotate(45deg);
+    transition: transform 0.25s ease;
+}
+
+.pagina-questionario .bloco[open] .bloco-icone::before {
+    transform: translateY(5px) rotate(-135deg);
+}
+
+/* bloco bloqueado: apagado, com cadeado */
+.pagina-questionario .bloco.bloqueado {
+    opacity: 0.62;
+    box-shadow: 6px 6px 0 #E9E3CF;
+}
+
+.pagina-questionario .bloco.bloqueado > summary { cursor: not-allowed; }
+.pagina-questionario .bloco.bloqueado .bloco-num { color: #9A927A; }
+.pagina-questionario .bloco.bloqueado .bloco-icone::before { display: none; }
+.pagina-questionario .bloco.bloqueado .bloco-icone {
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238A8470' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='4' y='11' width='16' height='10' rx='2'/%3E%3Cpath d='M8 11V8a4 4 0 0 1 8 0v3'/%3E%3C/svg%3E") center / 18px no-repeat;
+}
+
+/* animações: liberar, tremer (clicou num bloco bloqueado) e abrir */
+@keyframes q-liberar {
+    0%   { box-shadow: 8px 8px 0 var(--q-sombra), 0 0 0 0 rgba(242, 205, 92, 0.95); }
+    100% { box-shadow: 8px 8px 0 var(--q-sombra), 0 0 0 18px rgba(242, 205, 92, 0); }
+}
+
+@keyframes q-tremer {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(6px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+}
+
+@keyframes q-abrir {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: none; }
+}
+
+.pagina-questionario .bloco.recem-liberado { animation: q-liberar 1.2s ease-out 1; }
+.pagina-questionario .bloco.tremer { animation: q-tremer 0.45s ease; }
+.pagina-questionario .bloco[open] > .bloco-corpo { animation: q-abrir 0.3s ease-out; }
+
+/* ---------- conteúdo do bloco ---------- */
+.pagina-questionario .bloco-corpo { padding: 0 28px 32px; }
+
+.pagina-questionario .pergunta { margin: 0 0 32px; }
+
+.pagina-questionario .pergunta-titulo {
+    display: block;
+    margin: 0 0 12px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 1.02rem;
+    line-height: 1.4;
+    color: var(--q-tinta);
+}
+
+.pagina-questionario .dica {
+    margin: -6px 0 12px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: var(--q-suave);
+}
+
+.pagina-questionario .contador {
+    margin: 10px 0 0;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--q-suave);
+}
+
+/* ---------- campos de texto (bloco 01 e caixa de texto) ---------- */
+.pagina-questionario .campos {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 20px;
+}
+
+.pagina-questionario .campo { display: flex; flex-direction: column; gap: 8px; }
+.pagina-questionario .campo.largo { grid-column: 1 / -1; }
+
+.pagina-questionario .campo label {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.82rem;
+    letter-spacing: 0.04em;
+}
+
+.pagina-questionario .campo .opcional {
+    margin-left: 6px;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: 0;
+    color: var(--q-suave);
+}
+
+.pagina-questionario .questionario input[type="text"],
+.pagina-questionario .questionario input[type="email"],
+.pagina-questionario .questionario input[type="tel"],
+.pagina-questionario .questionario textarea {
+    width: 100%;
+    margin: 0;
+    padding: 14px 16px;
+    box-sizing: border-box;
+    background: var(--q-cartao);
+    border: 1px solid #CFC7AA;
+    border-radius: var(--q-raio-campo);
+    color: var(--q-tinta);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pagina-questionario .questionario textarea { resize: vertical; min-height: 110px; line-height: 1.5; }
+
+.pagina-questionario .questionario input[type="text"]::placeholder,
+.pagina-questionario .questionario input[type="email"]::placeholder,
+.pagina-questionario .questionario input[type="tel"]::placeholder,
+.pagina-questionario .questionario textarea::placeholder { color: #9A927A; }
+
+.pagina-questionario .questionario input[type="text"]:focus,
+.pagina-questionario .questionario input[type="email"]:focus,
+.pagina-questionario .questionario input[type="tel"]:focus,
+.pagina-questionario .questionario textarea:focus {
+    outline: none;
+    border-color: var(--q-tinta);
+    box-shadow: 4px 4px 0 var(--q-amarelo);
+}
+
+.pagina-questionario .questionario input,
+.pagina-questionario .questionario textarea {
+    scroll-margin-top: calc(var(--altura-topo, 110px) + 24px);
+}
+
+/* ---------- opções (radio e checkbox em caixinhas) ---------- */
+.pagina-questionario .opcoes {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px 14px;
+}
+
+.pagina-questionario .opcoes.colunas-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.pagina-questionario .opcoes.coluna-unica { grid-template-columns: 1fr; }
+
+.pagina-questionario .opcao {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--q-cartao);
+    border: 1px solid #D8D0B4;
+    border-radius: var(--q-raio-opcao);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+    font-size: 0.88rem;
+    line-height: 1.35;
+    color: var(--q-tinta);
+    transition: border-color 0.15s ease, background-color 0.15s ease, transform 0.12s ease;
+}
+
+/* efeito de "apertar" ao tocar */
+.pagina-questionario .opcao:active { transform: scale(0.98); }
+
+@media (hover: hover) {
+    .pagina-questionario .opcao:hover { border-color: var(--q-tinta); }
+}
+
+.pagina-questionario .opcao input {
+    -webkit-appearance: none;
+    appearance: none;
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    border: 2px solid #8C8570;
+    border-radius: 50%;
+    background: transparent;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pagina-questionario .opcao input[type="checkbox"] { border-radius: 4px; }
+
+.pagina-questionario .opcao input[type="radio"]:checked {
+    border-color: var(--q-tinta);
+    background-color: var(--q-tinta);
+    box-shadow: inset 0 0 0 3.5px var(--q-realce);
+}
+
+.pagina-questionario .opcao input[type="checkbox"]:checked {
+    border-color: var(--q-tinta);
+    background-color: var(--q-tinta);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M4 10.5l4 4 8-9' fill='none' stroke='%23F2CD5C' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-size: 13px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.pagina-questionario .opcao:has(input:checked) {
+    border-color: var(--q-tinta);
+    background: var(--q-realce);
+}
+
+.pagina-questionario .opcao:has(input:focus-visible) {
+    outline: 3px solid var(--q-amarelo);
+    outline-offset: 2px;
+}
+
+.pagina-questionario .opcao.desativada,
+.pagina-questionario .opcao.desativada input {
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.pagina-questionario .opcao.desativada:hover { border-color: #D8D0B4; }
+.pagina-questionario .opcao.desativada:active { transform: none; }
+
+/* ---------- botões ---------- */
+.pagina-questionario .bloco-rodape {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 8px;
+}
+
+.pagina-questionario .btn-continuar,
+.pagina-questionario .btn-enviar {
+    -webkit-appearance: none;
+    appearance: none;
+    width: auto;
+    margin: 0;
+    min-height: 52px;
+    padding: 0 30px;
+    border: 2px solid var(--q-tinta);
+    border-radius: 999px;                /* pílula: cantos 100% redondos */
+    background: var(--q-tinta);
+    color: var(--q-amarelo);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.82rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.pagina-questionario .btn-continuar:active,
+.pagina-questionario .btn-enviar:active { transform: scale(0.97); }
+
+@media (hover: hover) {
+    .pagina-questionario .btn-continuar:hover,
+    .pagina-questionario .btn-enviar:hover {
+        background: var(--q-amarelo);
+        color: var(--q-tinta);
+    }
+    .pagina-questionario .btn-continuar:hover span,
+    .pagina-questionario .btn-enviar:hover span { transform: translateX(5px); }
+}
+
+.pagina-questionario .btn-continuar span,
+.pagina-questionario .btn-enviar span {
+    display: inline-block;
+    margin-left: 6px;
+    transition: transform 0.2s ease;
+}
+
+/* botão "incompleto": continua clicável (mostra o aviso do campo), mas fica apagado */
+.pagina-questionario .btn-continuar[aria-disabled="true"],
+.pagina-questionario .btn-continuar[aria-disabled="true"]:hover {
+    background: var(--q-tinta);
+    color: var(--q-amarelo);
+    opacity: 0.45;
+    cursor: not-allowed;
+}
+
+.pagina-questionario .btn-continuar[aria-disabled="true"]:hover span { transform: none; }
+.pagina-questionario .btn-continuar[aria-disabled="true"]:active { transform: none; }
+
+.pagina-questionario .btn-enviar[aria-disabled="true"] { opacity: 0.6; cursor: progress; }
+
+.pagina-questionario .btn-continuar:focus-visible,
+.pagina-questionario .btn-enviar:focus-visible {
+    outline: 3px solid var(--q-amarelo);
+    outline-offset: 3px;
+}
+
+/* ---------- telas estreitas (primeira versão; o ajuste completo fica para depois) ---------- */
+@media (max-width: 720px) {
+    .pagina-questionario { background-size: 760px auto; }   /* azulejo menor no celular */
+    .pagina-questionario .questionario { padding: 28px 16px 70px; }
+    .pagina-questionario .opcoes,
+    .pagina-questionario .opcoes.colunas-3,
+    .pagina-questionario .campos { grid-template-columns: 1fr; }
+    .pagina-questionario .bloco > summary { grid-template-columns: 46px 1fr 28px; padding: 20px 16px; }
+    .pagina-questionario .bloco-corpo { padding: 0 16px 24px; }
+    .pagina-questionario .bloco-rodape .btn-continuar,
+    .pagina-questionario .bloco-rodape .btn-enviar { width: 100%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pagina-questionario *,
+    .pagina-questionario *::before,
+    .pagina-questionario *::after {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ---------- pergunta inicial: "Você já tem o livro?" ----------
+   Mesmo estilo de cartão dos blocos (fundo, borda, sombra dura),
+   com uma faixa amarela à esquerda para mostrar que vem primeiro. */
+.pagina-questionario .pergunta-inicial {
+    background: var(--q-cartao);
+    border: 1px solid var(--q-borda);
+    border-left: 6px solid var(--q-amarelo);
+    border-radius: var(--q-raio-cartao);
+    margin: 0 8px 28px 0;
+    padding: 26px 28px 24px;
+    box-shadow: 8px 8px 0 var(--q-sombra);
+}
+
+/* "ANTES DE COMEÇAR": letrinha pequena, em caixa alta, na cor ouro dos números */
+.pagina-questionario .pergunta-inicial-selo {
+    margin: 0 0 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--q-ouro);
+}
+
+.pagina-questionario .pergunta-inicial .pergunta-titulo { font-size: 1.12rem; }
+
+/* mensagem que aparece depois de escolher (Lora itálico, como as dicas) */
+.pagina-questionario .pergunta-inicial-retorno {
+    margin: 16px 0 0;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--q-suave);
+}
+.pagina-questionario .pergunta-inicial-retorno strong { font-style: normal; color: var(--q-tinta); }
+
+/* celular: um pouco menos de espaço nas laterais */
+@media (max-width: 720px) {
+    .pagina-questionario .pergunta-inicial { padding: 20px 16px 18px; }
+}
+
+
+/* ---------- fim da parte 1: dois caminhos ---------- */
+.pagina-questionario .fim-parte1 {
+    margin-top: 12px;
+    padding: 22px 20px 20px;
+    border: 2px dashed var(--q-tinta);
+    border-radius: 18px;
+    background: var(--q-realce);
+    text-align: center;
+}
+.pagina-questionario .fim-parte1-titulo {
+    margin: 0 0 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 1.05rem;
+}
+.pagina-questionario .fim-parte1-texto {
+    max-width: 520px;
+    margin: 0 auto 18px;
+    font-family: 'Lora', serif;
+    font-size: 0.98rem;
+    line-height: 1.5;
+    color: var(--q-suave);
+}
+.pagina-questionario .fim-parte1-botoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+/* botão "secundário": só contorno, para o principal (continuar) chamar mais atenção */
+.pagina-questionario .btn-enviar.btn-enviar-sec { background: transparent; color: var(--q-tinta); }
+.pagina-questionario .btn-enviar { line-height: 1.3; padding-top: 10px; padding-bottom: 10px; }
+@media (hover: hover) {
+    .pagina-questionario .btn-enviar.btn-enviar-sec:hover { background: var(--q-tinta); color: var(--q-amarelo); }
+}
+@media (max-width: 720px) {
+    .pagina-questionario .fim-parte1-botoes .btn-enviar { width: 100%; }
+}
+
+/* ---------- parte 2 (página própria) ---------- */
+.pagina-parte2 { min-height: 100vh; }
+.pagina-parte2 .parte2-selo {
+    display: table;
+    margin: 0 auto 16px;
+    padding: 8px 15px;
+    border-radius: 999px;
+    background: var(--q-tinta);
+    color: var(--q-amarelo);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+.pagina-parte2 .parte2-titulo {
+    margin: 0 auto 16px;
+    max-width: 700px;
+    text-align: center;
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: clamp(1.8rem, 6vw, 2.6rem);
+    line-height: 1.12;
+}
+.pagina-parte2 .cartao-parte2 {
+    background: var(--q-cartao);
+    border: 1px solid var(--q-borda);
+    border-left: 6px solid var(--q-amarelo);
+    border-radius: var(--q-raio-cartao);
+    margin: 0 8px 28px 0;
+    padding: 28px 28px 24px;
+    box-shadow: 8px 8px 0 var(--q-sombra);
+}
+@media (max-width: 720px) {
+    .pagina-parte2 .cartao-parte2 { padding: 20px 16px 18px; }
+}
+
+/* ---------- parte 2: blocos, escala 0 a 10 e perguntas em sequência ---------- */
+.pagina-parte2 .parte2-bloco { margin: 0 0 8px; }
+.pagina-parte2 .parte2-bloco + .parte2-bloco { margin-top: 30px; padding-top: 24px; border-top: 2px dashed var(--q-borda); }
+.pagina-parte2 .parte2-bloco-titulo {
+    margin: 0 0 4px;
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: clamp(1.3rem, 4.6vw, 1.7rem);
+    line-height: 1.15;
+}
+.pagina-parte2 .parte2-bloco-sub { margin: 0 0 14px; font-size: 0.9rem; opacity: 0.75; }
+.pagina-parte2 .escala { display: flex; flex-wrap: wrap; gap: 8px; }
+.pagina-parte2 .escala .opcao { min-width: 48px; justify-content: center; text-align: center; }
+.pagina-parte2 .opcao input:disabled + span { opacity: 0.4; }
+
+.pagina-parte2 .depoimento-extra[hidden] { display: none; }
+.pagina-parte2 .depoimento-extra { margin-top: 6px; padding: 16px 14px 4px; border-left: 4px solid var(--q-amarelo); background: rgba(255, 221, 87, 0.12); border-radius: 12px; }
+
+/* ---------- questionário V4: destaque do presente, aviso de privacidade, campo "Outro" ---------- */
+.pagina-questionario .presente-destaque {
+    margin: 22px 0;
+    padding: 16px 18px;
+    border: 2px dashed var(--q-amarelo);
+    border-radius: 14px;
+    background: rgba(255, 221, 87, 0.16);
+}
+.pagina-questionario .presente-destaque p { margin: 4px 0 0; }
+.pagina-questionario .presente-destaque-selo {
+    display: inline-block;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--q-tinta);
+}
+.pagina-questionario .presente-destaque-topo { max-width: 720px; margin: 0 auto 18px; }
+.pagina-questionario .aviso-privacidade {
+    max-width: 720px;
+    margin: 0 auto 22px;
+    font-size: 0.92rem;
+    border: 1px solid var(--q-borda);
+    border-radius: 12px;
+    padding: 12px 16px;
+    background: var(--q-cartao);
+}
+.pagina-questionario .aviso-privacidade summary { cursor: pointer; font-weight: 700; }
+.pagina-questionario .aviso-privacidade p { margin: 10px 0 0; }
+.pagina-questionario .dica-bloco { margin: 10px 0 0; font-size: 0.88rem; opacity: 0.75; }
+.pagina-questionario .campo-outro { margin-top: 10px; }
+.pagina-questionario .campo-outro[hidden] { display: none; }
+.pagina-questionario .escala { display: flex; flex-wrap: wrap; gap: 8px; }
+.pagina-questionario .escala .opcao { min-width: 48px; justify-content: center; text-align: center; }
+.pagina-parte2 .barra-progresso { position: sticky; top: 0; z-index: 5; }
+.pagina-questionario details.aviso-privacidade { padding: 0; }
+.pagina-questionario details.aviso-privacidade > summary {
+    padding: 12px 16px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.92rem;
+    font-weight: 700;
+    list-style: none;
+}
+.pagina-questionario details.aviso-privacidade > p { padding: 0 16px; }
+.pagina-questionario details.aviso-privacidade > p:last-child { padding-bottom: 14px; }

@@ -1,0 +1,203 @@
+/* ============================================================
+   Página de agradecimento (depois de enviar o questionário)
+   Sem caixa: o conteúdo flutua sobre o padrão de conexões, bem clarinho.
+   ============================================================ */
+
+.obrigado {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 100vh;
+    min-height: 100svh;                 /* celular: ignora a barra de endereço */
+    padding: 40px 24px;
+    overflow: hidden;
+    text-align: center;
+    background-color: #FBF4DC;
+    background-image: url("fundo-conexoes.jpg");   /* o mesmo padrão do questionário */
+    background-size: 1100px auto;
+    background-repeat: repeat;
+    color: #0D0D0D;
+}
+
+/* véu claro por cima do padrão: é ele que deixa as linhas "quase transparentes".
+   Para o padrão aparecer mais, diminua o último número (0.80); para sumir mais, aumente. */
+.obrigado::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(251, 244, 220, 0.80);
+}
+
+.obrigado-conteudo {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 520px;
+}
+
+/* círculo amarelo com o "check" */
+.obrigado-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 84px;
+    height: 84px;
+    margin: 0 auto 26px;
+    border-radius: 50%;
+    background: #F2CD5C;
+    border: 3px solid #0D0D0D;
+}
+.obrigado-check svg { width: 40px; height: 40px; }
+
+.obrigado-selo {
+    display: inline-block;
+    margin: 0 0 18px;
+    padding: 8px 15px;
+    border-radius: 999px;
+    background: #0D0D0D;
+    color: #F2CD5C;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.7rem;
+    line-height: 1;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.obrigado h1 {
+    margin: 0 0 16px;
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: clamp(2.2rem, 9vw, 3.4rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+}
+
+.obrigado p {
+    margin: 0 auto 34px;
+    max-width: 420px;
+    font-family: 'Lora', serif;
+    font-size: clamp(1.02rem, 3.6vw, 1.2rem);
+    line-height: 1.6;
+}
+
+/* ---------- PRESENTE ----------
+   Um "vale-presente" discreto: borda tracejada, fundo branco translúcido. */
+.presente {
+    margin: -10px auto 32px;
+    max-width: 380px;
+    padding: 18px 20px 20px;
+    border: 2px dashed #0D0D0D;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.6);
+}
+.presente-rotulo {
+    display: block;
+    margin-bottom: 8px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #4A473D;
+}
+.obrigado .presente-texto {          /* ".obrigado" na frente para vencer a regra geral de <p> */
+    margin: 0 0 10px;
+    font-size: 1.02rem;
+}
+.presente-regra {
+    display: block;
+    font-family: 'Lora', serif;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: #4A473D;
+}
+
+/* ---------- página da videoaula ---------- */
+.obrigado .videoaula-conteudo { max-width: 760px; }
+.video-moldura {
+    position: relative;
+    margin: 0 auto 28px;
+    aspect-ratio: 16 / 9;               /* o vídeo mantém a proporção em qualquer tela */
+    border: 3px solid #0D0D0D;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #0D0D0D;
+}
+.video-moldura iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+/* os dois botões */
+.obrigado-botoes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.obrigado-botao {
+    box-sizing: border-box;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 340px;
+    min-height: 58px;                   /* altura boa para o dedo */
+    padding: 0 28px;
+    border-radius: 999px;
+    border: 3px solid #0D0D0D;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.obrigado-botao.principal { background: #0D0D0D; color: #F2CD5C; }
+.obrigado-botao.secundario { background: #F2CD5C; color: #0D0D0D; }
+.obrigado-botao .seta { margin-left: 8px; transition: transform 0.2s ease; }
+
+.obrigado-botao:active { transform: scale(0.96); }
+.obrigado-botao:focus-visible { outline: 3px solid #0D0D0D; outline-offset: 4px; }
+
+@media (hover: hover) {
+    .obrigado-botao.principal:hover { background: #ffffff; color: #0D0D0D; }
+    .obrigado-botao.secundario:hover { background: #ffffff; }
+    .obrigado-botao.principal:hover .seta { transform: translateX(5px); }
+}
+
+/* PC: botões lado a lado */
+@media (min-width: 640px) {
+    .obrigado-botoes { flex-direction: row-reverse; justify-content: center; }
+    .obrigado-botao { width: auto; max-width: none; min-width: 210px; }
+}
+
+/* celular: o padrão fica menor, para repetir mais vezes */
+@media (max-width: 700px) {
+    .obrigado { background-size: 700px auto; }
+}
+
+/* entrada suave: cada item sobe e aparece, um depois do outro */
+@keyframes obrigado-subir {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: none; }
+}
+.obrigado-conteudo > * { animation: obrigado-subir 0.6s ease-out backwards; }
+.obrigado-conteudo > :nth-child(2) { animation-delay: 0.08s; }
+.obrigado-conteudo > :nth-child(3) { animation-delay: 0.16s; }
+.obrigado-conteudo > :nth-child(4) { animation-delay: 0.24s; }
+.obrigado-conteudo > :nth-child(5) { animation-delay: 0.32s; }
+.obrigado-conteudo > :nth-child(6) { animation-delay: 0.40s; }
+
+@media (prefers-reduced-motion: reduce) {
+    .obrigado-conteudo > * { animation: none; }
+    .obrigado-botao, .obrigado-botao .seta { transition: none; }
+}
+
+/* na página da videoaula o aviso vem DEPOIS dos botões (sem a margem negativa do cartão de presente) */
+.videoaula-conteudo .obrigado-botoes { margin-bottom: 28px; }
+.videoaula-conteudo .presente { margin: 0 auto; }

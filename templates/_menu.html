@@ -1,0 +1,22 @@
+{# MENU LATERAL (☰). Para mudar os links do menu, edite só este arquivo: vale para todas as páginas. #}
+{% set pagina = request.endpoint %}
+<button type="button" class="menu-botao" id="menuBotao" aria-label="Abrir menu" aria-expanded="false" aria-controls="menuLateral">
+    <span></span><span></span><span></span>
+</button>
+
+<div class="menu-fundo" id="menuFundo"></div>
+
+<nav class="menu-lateral" id="menuLateral" aria-label="Menu principal">
+    <div class="menu-topo">
+        <span class="menu-rotulo">Menu</span>
+        <button type="button" class="menu-fechar" id="menuFechar" aria-label="Fechar menu">&times;</button>
+    </div>
+    <ul class="menu-links">
+        <li><a href="{{ url_for('capa') }}"{% if pagina == 'capa' %} aria-current="page"{% endif %}>Início</a></li>
+        <li><a href="{{ url_for('livro') }}"{% if pagina == 'livro' %} aria-current="page"{% endif %}>Conheça o livro</a></li>
+        <li><a href="{{ url_for('autor') }}"{% if pagina == 'autor' %} aria-current="page"{% endif %}>Sobre o Autor</a></li>
+        <li><a href="{{ url_for('capa') }}#questionario" class="menu-destaque">Responda o questionário <span class="seta" aria-hidden="true">&rarr;</span></a></li>
+    </ul>
+</nav>
+
+<script src="{{ url_for('static', filename='menu.js') }}?v=1.7" defer></script>

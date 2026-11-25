@@ -1,0 +1,411 @@
+{# Conteúdo do questionário (PARTE 1). É incluído dentro da capa.html (seção #questionario).
+   GERADO por gerar_questionario.py a partir do documento do cliente (Questionario V4). #}
+<!-- BARRA DE PROGRESSO: BLOCO X DE 3 -->
+    <div class="barra-progresso" id="barraProgresso" role="progressbar" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0" aria-live="polite">
+        Bloco <span id="progBlocos">0</span> de 5
+        <span class="barra-fill" id="progPreenchimento"></span>
+    </div>
+
+    <div class="questionario">
+        <h2 class="so-leitores">Questionário Do Zero ao Possível</h2>
+        <p class="questionario-intro">Queremos compreender melhor quem se interessa por &ldquo;{{ livro_completo }}&rdquo; e pela Gestão Conectiva. Suas respostas ajudarão a identificar diferentes perfis de leitores, seus desafios profissionais, formação, hábitos e interesses. Com isso, poderemos criar conteúdos, eventos e experiências mais relevantes. O preenchimento total do questionário leva aproximadamente cinco minutos. Esta é a primeira de duas partes.</p>
+
+        <div class="presente-destaque presente-destaque-topo">
+            <strong class="presente-destaque-selo">Presente especial</strong>
+            <p>Preencha e ganhe o <strong>Workbook &ldquo;{{ presente_nome }}&rdquo;</strong>, um material exclusivo para a jornada profissional. O material será enviado pelo contato informado.</p>
+        </div>
+
+        <details class="aviso-privacidade">
+            <summary>Aviso de privacidade e LGPD</summary>
+            <p>Esta pesquisa tem finalidade exclusivamente interna. As respostas serão utilizadas pelo autor e pela equipe do projeto para compreender o público de &ldquo;Do Zero ao Possível!&rdquo;, orientar conteúdos, eventos, comunicação e estratégias de divulgação da obra.</p>
+            <p>Os dados não serão vendidos, alugados ou compartilhados para finalidades comerciais externas. O tratamento será realizado de acordo com a Lei Geral de Proteção de Dados Pessoais (LGPD, Lei nº 13.709/2018), respeitando os princípios de finalidade, necessidade, transparência, segurança e confidencialidade.</p>
+            <p>Não solicitamos dados sensíveis nem dados de terceiros. As respostas serão acessadas somente pelo autor e por pessoas autorizadas para uso interno do projeto. Você poderá solicitar informações, correção ou exclusão dos seus dados pelo canal de contato informado pelo projeto.</p>
+        </details>
+
+        <form method="POST" action="{{ url_for('questionario') }}" id="formQuestionario">
+
+          {# PROTEÇÃO CONTRA ROBÔS (a pessoa não vê nada disto): carregado_em = hora em que a página abriu;
+             site_empresa = "pote de mel", fica fora da tela e só robô preenche. #}
+          <input type="hidden" name="carregado_em" value="{{ carregado_em }}">
+          <div style="position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;" aria-hidden="true">
+            <label for="site_empresa">Não preencha este campo</label>
+            <input type="text" id="site_empresa" name="site_empresa" tabindex="-1" autocomplete="off">
+          </div>
+
+      <details class="bloco" open>
+        <summary>
+          <span class="bloco-num"><span class="n">01</span><svg class="ok" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="bloco-titulo"><strong>Como podemos falar com você?</strong><span class="sub">Dados de contato (todos obrigatórios)</span><span class="aviso">Responda o bloco anterior para liberar</span></span>
+          <span class="bloco-icone" aria-hidden="true"></span>
+        </summary>
+        <div class="bloco-corpo">
+        <div class="campos">
+          <div class="campo largo">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required autocomplete="name" maxlength="120">
+          </div>
+          <div class="campo">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="voce@email.com" required autocomplete="email" maxlength="120">
+          </div>
+          <div class="campo">
+            <label for="whatsapp">WhatsApp (com DDD)</label>
+            <input type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 00000-0000" required autocomplete="tel" maxlength="25">
+          </div>
+          <div class="campo">
+            <label for="instagram">Perfil do Instagram</label>
+            <input type="text" id="instagram" name="instagram" placeholder="@seuperfil (com ou sem o @)" required maxlength="40" pattern="@?[A-Za-z0-9._]{1,30}" title="Use só letras, números, ponto e sublinhado. Pode começar com @.">
+          </div>
+          <div class="campo">
+            <label for="cidade_estado">Cidade e estado onde mora</label>
+            <input type="text" id="cidade_estado" name="cidade_estado" placeholder="Ex.: Londrina - PR" required maxlength="80" autocomplete="address-level2">
+          </div>
+        </div>
+        <p class="dica-bloco">Pedimos só cidade e estado, nunca o seu endereço.</p>
+        <div class="bloco-rodape">
+            <button type="button" class="btn-continuar">Continuar <span aria-hidden="true">&rarr;</span></button>
+          </div>
+        </div>
+      </details>
+      <details class="bloco">
+        <summary>
+          <span class="bloco-num"><span class="n">02</span><svg class="ok" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="bloco-titulo"><strong>Sua relação com o livro</strong><span class="sub">Perguntas opcionais</span><span class="aviso">Responda o bloco anterior para liberar</span></span>
+          <span class="bloco-icone" aria-hidden="true"></span>
+        </summary>
+        <div class="bloco-corpo">
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_relacao_livro">Qual é sua relação com “Do Zero ao Possível!”?</p>
+          <p class="dica">Escolha uma opção</p>
+          <div class="opcoes" role="radiogroup" aria-labelledby="p_relacao_livro">
+          <label class="opcao"><input type="radio" id="relacao_livro_0" name="relacao_livro" value="Já comprei o livro"><span>Já comprei o livro</span></label>
+          <label class="opcao"><input type="radio" id="relacao_livro_1" name="relacao_livro" value="Já li o livro"><span>Já li o livro</span></label>
+          <label class="opcao"><input type="radio" id="relacao_livro_2" name="relacao_livro" value="Estou lendo o livro"><span>Estou lendo o livro</span></label>
+          <label class="opcao"><input type="radio" id="relacao_livro_3" name="relacao_livro" value="Pretendo comprar o livro"><span>Pretendo comprar o livro</span></label>
+          <label class="opcao"><input type="radio" id="relacao_livro_4" name="relacao_livro" value="Ganhei ou recebi o livro"><span>Ganhei ou recebi o livro</span></label>
+          <label class="opcao"><input type="radio" id="relacao_livro_5" name="relacao_livro" value="Estou conhecendo o livro agora"><span>Estou conhecendo o livro agora</span></label>
+          <label class="opcao"><input type="radio" id="relacao_livro_6" name="relacao_livro" value="Quero acompanhar o trabalho do autor"><span>Quero acompanhar o trabalho do autor</span></label>
+          <label class="opcao"><input type="radio" id="relacao_livro_7" name="relacao_livro" value="Ainda não sei se o livro é para mim"><span>Ainda não sei se o livro é para mim</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_interesse_livro">O que despertou seu interesse pelo livro?</p>
+          <p class="dica">Escolha até três</p>
+          <div class="opcoes" role="group" aria-labelledby="p_interesse_livro" data-max="3">
+          <label class="opcao"><input type="checkbox" id="interesse_livro_0" name="interesse_livro" value="O tema das Soft Skills"><span>O tema das Soft Skills</span></label>
+          <label class="opcao"><input type="checkbox" id="interesse_livro_1" name="interesse_livro" value="O conceito de Gestão Conectiva"><span>O conceito de Gestão Conectiva</span></label>
+          <label class="opcao"><input type="checkbox" id="interesse_livro_2" name="interesse_livro" value="Ego, Persona e comportamento profissional"><span>Ego, Persona e comportamento profissional</span></label>
+          <label class="opcao"><input type="checkbox" id="interesse_livro_3" name="interesse_livro" value="Liderança e desenvolvimento de equipes"><span>Liderança e desenvolvimento de equipes</span></label>
+          <label class="opcao"><input type="checkbox" id="interesse_livro_4" name="interesse_livro" value="Comunicação e relacionamento"><span>Comunicação e relacionamento</span></label>
+          <label class="opcao"><input type="checkbox" id="interesse_livro_5" name="interesse_livro" value="Carreira e crescimento profissional"><span>Carreira e crescimento profissional</span></label>
+          <label class="opcao"><input type="checkbox" id="interesse_livro_6" name="interesse_livro" value="Inteligência emocional"><span>Inteligência emocional</span></label>
+          <label class="opcao"><input type="checkbox" id="interesse_livro_7" name="interesse_livro" value="A trajetória do autor"><span>A trajetória do autor</span></label>
+          <label class="opcao"><input type="checkbox" id="interesse_livro_8" name="interesse_livro" value="Uma indicação de outra pessoa"><span>Uma indicação de outra pessoa</span></label>
+          <label class="opcao"><input type="checkbox" id="interesse_livro_9" name="interesse_livro" value="O lançamento do livro"><span>O lançamento do livro</span></label>
+          <label class="opcao"><input type="checkbox" id="interesse_livro_10" name="interesse_livro" value="A capa ou identidade visual"><span>A capa ou identidade visual</span></label>
+          <label class="opcao"><input type="checkbox" id="interesse_livro_11" name="interesse_livro" value="Outro"><span>Outro</span></label>
+          </div>
+          <div class="campo campo-outro" data-outro-de="interesse_livro" hidden>
+            <label for="interesse_livro_outro">Qual? <span class="opcional">(resposta curta)</span></label>
+            <input type="text" id="interesse_livro_outro" name="interesse_livro_outro" maxlength="120" disabled>
+          </div>
+          <p class="contador" aria-live="polite">0 de 3 escolhidas</p>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_espera_leitura">O que você espera obter com a leitura?</p>
+          <p class="dica">Assinale quantas quiser</p>
+          <div class="opcoes" role="group" aria-labelledby="p_espera_leitura">
+          <label class="opcao"><input type="checkbox" id="espera_leitura_0" name="espera_leitura" value="Melhorar minha carreira"><span>Melhorar minha carreira</span></label>
+          <label class="opcao"><input type="checkbox" id="espera_leitura_1" name="espera_leitura" value="Tornar-me um líder melhor"><span>Tornar-me um líder melhor</span></label>
+          <label class="opcao"><input type="checkbox" id="espera_leitura_2" name="espera_leitura" value="Melhorar minha comunicação"><span>Melhorar minha comunicação</span></label>
+          <label class="opcao"><input type="checkbox" id="espera_leitura_3" name="espera_leitura" value="Aprender a lidar melhor com pessoas"><span>Aprender a lidar melhor com pessoas</span></label>
+          <label class="opcao"><input type="checkbox" id="espera_leitura_4" name="espera_leitura" value="Desenvolver inteligência emocional"><span>Desenvolver inteligência emocional</span></label>
+          <label class="opcao"><input type="checkbox" id="espera_leitura_5" name="espera_leitura" value="Melhorar o trabalho em equipe"><span>Melhorar o trabalho em equipe</span></label>
+          <label class="opcao"><input type="checkbox" id="espera_leitura_6" name="espera_leitura" value="Entender melhor meu próprio comportamento"><span>Entender melhor meu próprio comportamento</span></label>
+          <label class="opcao"><input type="checkbox" id="espera_leitura_7" name="espera_leitura" value="Melhorar minha atuação como professor ou pesquisador"><span>Melhorar minha atuação como professor ou pesquisador</span></label>
+          <label class="opcao"><input type="checkbox" id="espera_leitura_8" name="espera_leitura" value="Aplicar os conceitos na minha empresa ou organização"><span>Aplicar os conceitos na minha empresa ou organização</span></label>
+          <label class="opcao"><input type="checkbox" id="espera_leitura_9" name="espera_leitura" value="Ajudar no desenvolvimento de uma equipe"><span>Ajudar no desenvolvimento de uma equipe</span></label>
+          <label class="opcao"><input type="checkbox" id="espera_leitura_10" name="espera_leitura" value="Presentear ou indicar o livro para alguém"><span>Presentear ou indicar o livro para alguém</span></label>
+          <label class="opcao"><input type="checkbox" id="espera_leitura_11" name="espera_leitura" value="Ainda não sei"><span>Ainda não sei</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <label class="pergunta-titulo" for="livro_representa">Em uma frase, o que o livro representa para você?</label>
+          <p class="dica">Resposta longa · opcional</p>
+          <textarea id="livro_representa" name="livro_representa" rows="4" maxlength="1500" placeholder="Escreva aqui..."></textarea>
+        </div>
+        <div class="bloco-rodape">
+            <button type="button" class="btn-continuar">Continuar <span aria-hidden="true">&rarr;</span></button>
+          </div>
+        </div>
+      </details>
+      <details class="bloco">
+        <summary>
+          <span class="bloco-num"><span class="n">03</span><svg class="ok" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="bloco-titulo"><strong>Seu perfil profissional</strong><span class="sub">Perguntas opcionais</span><span class="aviso">Responda o bloco anterior para liberar</span></span>
+          <span class="bloco-icone" aria-hidden="true"></span>
+        </summary>
+        <div class="bloco-corpo">
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_perfil_profissional">Como você se define profissionalmente?</p>
+          <p class="dica">Escolha uma opção</p>
+          <div class="opcoes" role="radiogroup" aria-labelledby="p_perfil_profissional">
+          <label class="opcao"><input type="radio" id="perfil_profissional_0" name="perfil_profissional" value="Estudante"><span>Estudante</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_1" name="perfil_profissional" value="Profissional empregado"><span>Profissional empregado</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_2" name="perfil_profissional" value="Servidor público"><span>Servidor público</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_3" name="perfil_profissional" value="Empresário ou empreendedor"><span>Empresário ou empreendedor</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_4" name="perfil_profissional" value="Profissional autônomo"><span>Profissional autônomo</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_5" name="perfil_profissional" value="Professor"><span>Professor</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_6" name="perfil_profissional" value="Pesquisador"><span>Pesquisador</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_7" name="perfil_profissional" value="Gestor ou líder de equipe"><span>Gestor ou líder de equipe</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_8" name="perfil_profissional" value="Profissional liberal"><span>Profissional liberal</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_9" name="perfil_profissional" value="Em transição de carreira"><span>Em transição de carreira</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_10" name="perfil_profissional" value="Procurando trabalho"><span>Procurando trabalho</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_11" name="perfil_profissional" value="Aposentado"><span>Aposentado</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_12" name="perfil_profissional" value="Outro"><span>Outro</span></label>
+          <label class="opcao"><input type="radio" id="perfil_profissional_13" name="perfil_profissional" value="Prefiro não responder"><span>Prefiro não responder</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_area_atuacao">Qual é sua principal área de atuação?</p>
+          <p class="dica">Escolha uma opção</p>
+          <div class="opcoes" role="radiogroup" aria-labelledby="p_area_atuacao">
+          <label class="opcao"><input type="radio" id="area_atuacao_0" name="area_atuacao" value="Administração e gestão"><span>Administração e gestão</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_1" name="area_atuacao" value="Educação e pesquisa"><span>Educação e pesquisa</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_2" name="area_atuacao" value="Marketing e comunicação"><span>Marketing e comunicação</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_3" name="area_atuacao" value="Tecnologia"><span>Tecnologia</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_4" name="area_atuacao" value="Saúde"><span>Saúde</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_5" name="area_atuacao" value="Direito"><span>Direito</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_6" name="area_atuacao" value="Engenharia"><span>Engenharia</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_7" name="area_atuacao" value="Agronegócio"><span>Agronegócio</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_8" name="area_atuacao" value="Serviço público"><span>Serviço público</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_9" name="area_atuacao" value="Terceiro setor"><span>Terceiro setor</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_10" name="area_atuacao" value="Comércio e vendas"><span>Comércio e vendas</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_11" name="area_atuacao" value="Indústria"><span>Indústria</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_12" name="area_atuacao" value="Cultura e economia criativa"><span>Cultura e economia criativa</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_13" name="area_atuacao" value="Recursos Humanos"><span>Recursos Humanos</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_14" name="area_atuacao" value="Atendimento e relacionamento com clientes"><span>Atendimento e relacionamento com clientes</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_15" name="area_atuacao" value="Outra"><span>Outra</span></label>
+          <label class="opcao"><input type="radio" id="area_atuacao_16" name="area_atuacao" value="Prefiro não responder"><span>Prefiro não responder</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_lideranca_atual">Você exerce atualmente alguma função de liderança?</p>
+          <p class="dica">Escolha uma opção</p>
+          <div class="opcoes" role="radiogroup" aria-labelledby="p_lideranca_atual">
+          <label class="opcao"><input type="radio" id="lideranca_atual_0" name="lideranca_atual" value="Sim, lidero uma equipe"><span>Sim, lidero uma equipe</span></label>
+          <label class="opcao"><input type="radio" id="lideranca_atual_1" name="lideranca_atual" value="Sim, coordeno projetos ou processos"><span>Sim, coordeno projetos ou processos</span></label>
+          <label class="opcao"><input type="radio" id="lideranca_atual_2" name="lideranca_atual" value="Sim, lidero uma empresa ou negócio"><span>Sim, lidero uma empresa ou negócio</span></label>
+          <label class="opcao"><input type="radio" id="lideranca_atual_3" name="lideranca_atual" value="Exerço liderança informal"><span>Exerço liderança informal</span></label>
+          <label class="opcao"><input type="radio" id="lideranca_atual_4" name="lideranca_atual" value="Não, mas pretendo liderar"><span>Não, mas pretendo liderar</span></label>
+          <label class="opcao"><input type="radio" id="lideranca_atual_5" name="lideranca_atual" value="Não exerço liderança atualmente"><span>Não exerço liderança atualmente</span></label>
+          <label class="opcao"><input type="radio" id="lideranca_atual_6" name="lideranca_atual" value="Prefiro não responder"><span>Prefiro não responder</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_tamanho_organizacao">Quantas pessoas trabalham na organização em que você atua?</p>
+          <p class="dica">Escolha uma opção</p>
+          <div class="opcoes" role="radiogroup" aria-labelledby="p_tamanho_organizacao">
+          <label class="opcao"><input type="radio" id="tamanho_organizacao_0" name="tamanho_organizacao" value="Trabalho sozinho"><span>Trabalho sozinho</span></label>
+          <label class="opcao"><input type="radio" id="tamanho_organizacao_1" name="tamanho_organizacao" value="2 a 9 pessoas"><span>2 a 9 pessoas</span></label>
+          <label class="opcao"><input type="radio" id="tamanho_organizacao_2" name="tamanho_organizacao" value="10 a 49 pessoas"><span>10 a 49 pessoas</span></label>
+          <label class="opcao"><input type="radio" id="tamanho_organizacao_3" name="tamanho_organizacao" value="50 a 249 pessoas"><span>50 a 249 pessoas</span></label>
+          <label class="opcao"><input type="radio" id="tamanho_organizacao_4" name="tamanho_organizacao" value="250 pessoas ou mais"><span>250 pessoas ou mais</span></label>
+          <label class="opcao"><input type="radio" id="tamanho_organizacao_5" name="tamanho_organizacao" value="Não se aplica"><span>Não se aplica</span></label>
+          <label class="opcao"><input type="radio" id="tamanho_organizacao_6" name="tamanho_organizacao" value="Prefiro não responder"><span>Prefiro não responder</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_tempo_atuacao">Há quanto tempo você atua profissionalmente?</p>
+          <p class="dica">Escolha uma opção</p>
+          <div class="opcoes" role="radiogroup" aria-labelledby="p_tempo_atuacao">
+          <label class="opcao"><input type="radio" id="tempo_atuacao_0" name="tempo_atuacao" value="Ainda não comecei minha trajetória profissional"><span>Ainda não comecei minha trajetória profissional</span></label>
+          <label class="opcao"><input type="radio" id="tempo_atuacao_1" name="tempo_atuacao" value="Menos de 2 anos"><span>Menos de 2 anos</span></label>
+          <label class="opcao"><input type="radio" id="tempo_atuacao_2" name="tempo_atuacao" value="De 2 a 5 anos"><span>De 2 a 5 anos</span></label>
+          <label class="opcao"><input type="radio" id="tempo_atuacao_3" name="tempo_atuacao" value="De 6 a 10 anos"><span>De 6 a 10 anos</span></label>
+          <label class="opcao"><input type="radio" id="tempo_atuacao_4" name="tempo_atuacao" value="De 11 a 20 anos"><span>De 11 a 20 anos</span></label>
+          <label class="opcao"><input type="radio" id="tempo_atuacao_5" name="tempo_atuacao" value="Mais de 20 anos"><span>Mais de 20 anos</span></label>
+          <label class="opcao"><input type="radio" id="tempo_atuacao_6" name="tempo_atuacao" value="Prefiro não responder"><span>Prefiro não responder</span></label>
+          </div>
+        </div>
+        <div class="bloco-rodape">
+            <button type="button" class="btn-continuar">Continuar <span aria-hidden="true">&rarr;</span></button>
+          </div>
+        </div>
+      </details>
+      <details class="bloco">
+        <summary>
+          <span class="bloco-num"><span class="n">04</span><svg class="ok" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="bloco-titulo"><strong>Hábitos de conteúdo e comunicação</strong><span class="sub">Perguntas opcionais</span><span class="aviso">Responda o bloco anterior para liberar</span></span>
+          <span class="bloco-icone" aria-hidden="true"></span>
+        </summary>
+        <div class="bloco-corpo">
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_onde_consome">Onde você mais consome conteúdos sobre carreira, gestão e desenvolvimento pessoal?</p>
+          <p class="dica">Assinale quantas quiser</p>
+          <div class="opcoes" role="group" aria-labelledby="p_onde_consome">
+          <label class="opcao"><input type="checkbox" id="onde_consome_0" name="onde_consome" value="Instagram"><span>Instagram</span></label>
+          <label class="opcao"><input type="checkbox" id="onde_consome_1" name="onde_consome" value="YouTube"><span>YouTube</span></label>
+          <label class="opcao"><input type="checkbox" id="onde_consome_2" name="onde_consome" value="LinkedIn"><span>LinkedIn</span></label>
+          <label class="opcao"><input type="checkbox" id="onde_consome_3" name="onde_consome" value="TikTok"><span>TikTok</span></label>
+          <label class="opcao"><input type="checkbox" id="onde_consome_4" name="onde_consome" value="WhatsApp"><span>WhatsApp</span></label>
+          <label class="opcao"><input type="checkbox" id="onde_consome_5" name="onde_consome" value="Podcasts"><span>Podcasts</span></label>
+          <label class="opcao"><input type="checkbox" id="onde_consome_6" name="onde_consome" value="Livros físicos"><span>Livros físicos</span></label>
+          <label class="opcao"><input type="checkbox" id="onde_consome_7" name="onde_consome" value="E-books"><span>E-books</span></label>
+          <label class="opcao"><input type="checkbox" id="onde_consome_8" name="onde_consome" value="Cursos on-line"><span>Cursos on-line</span></label>
+          <label class="opcao"><input type="checkbox" id="onde_consome_9" name="onde_consome" value="Eventos e palestras"><span>Eventos e palestras</span></label>
+          <label class="opcao"><input type="checkbox" id="onde_consome_10" name="onde_consome" value="Artigos científicos"><span>Artigos científicos</span></label>
+          <label class="opcao"><input type="checkbox" id="onde_consome_11" name="onde_consome" value="Newsletters e e-mails"><span>Newsletters e e-mails</span></label>
+          <label class="opcao"><input type="checkbox" id="onde_consome_12" name="onde_consome" value="Comunidades e grupos"><span>Comunidades e grupos</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_formato_conteudo">Qual formato de conteúdo mais chama sua atenção?</p>
+          <p class="dica">Assinale quantas quiser</p>
+          <div class="opcoes" role="group" aria-labelledby="p_formato_conteudo">
+          <label class="opcao"><input type="checkbox" id="formato_conteudo_0" name="formato_conteudo" value="Reels e vídeos curtos"><span>Reels e vídeos curtos</span></label>
+          <label class="opcao"><input type="checkbox" id="formato_conteudo_1" name="formato_conteudo" value="Vídeos longos"><span>Vídeos longos</span></label>
+          <label class="opcao"><input type="checkbox" id="formato_conteudo_2" name="formato_conteudo" value="Carrosséis"><span>Carrosséis</span></label>
+          <label class="opcao"><input type="checkbox" id="formato_conteudo_3" name="formato_conteudo" value="Textos reflexivos"><span>Textos reflexivos</span></label>
+          <label class="opcao"><input type="checkbox" id="formato_conteudo_4" name="formato_conteudo" value="Entrevistas"><span>Entrevistas</span></label>
+          <label class="opcao"><input type="checkbox" id="formato_conteudo_5" name="formato_conteudo" value="Podcasts"><span>Podcasts</span></label>
+          <label class="opcao"><input type="checkbox" id="formato_conteudo_6" name="formato_conteudo" value="Lives"><span>Lives</span></label>
+          <label class="opcao"><input type="checkbox" id="formato_conteudo_7" name="formato_conteudo" value="Aulas"><span>Aulas</span></label>
+          <label class="opcao"><input type="checkbox" id="formato_conteudo_8" name="formato_conteudo" value="Estudos de caso"><span>Estudos de caso</span></label>
+          <label class="opcao"><input type="checkbox" id="formato_conteudo_9" name="formato_conteudo" value="Depoimentos de leitores"><span>Depoimentos de leitores</span></label>
+          <label class="opcao"><input type="checkbox" id="formato_conteudo_10" name="formato_conteudo" value="Infográficos"><span>Infográficos</span></label>
+          <label class="opcao"><input type="checkbox" id="formato_conteudo_11" name="formato_conteudo" value="E-books e materiais gratuitos"><span>E-books e materiais gratuitos</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_rede_interage">Em qual rede você tem maior probabilidade de interagir com conteúdos profissionais?</p>
+          <p class="dica">Escolha uma opção</p>
+          <div class="opcoes" role="radiogroup" aria-labelledby="p_rede_interage">
+          <label class="opcao"><input type="radio" id="rede_interage_0" name="rede_interage" value="Instagram"><span>Instagram</span></label>
+          <label class="opcao"><input type="radio" id="rede_interage_1" name="rede_interage" value="YouTube"><span>YouTube</span></label>
+          <label class="opcao"><input type="radio" id="rede_interage_2" name="rede_interage" value="LinkedIn"><span>LinkedIn</span></label>
+          <label class="opcao"><input type="radio" id="rede_interage_3" name="rede_interage" value="TikTok"><span>TikTok</span></label>
+          <label class="opcao"><input type="radio" id="rede_interage_4" name="rede_interage" value="WhatsApp"><span>WhatsApp</span></label>
+          <label class="opcao"><input type="radio" id="rede_interage_5" name="rede_interage" value="Facebook"><span>Facebook</span></label>
+          <label class="opcao"><input type="radio" id="rede_interage_6" name="rede_interage" value="Outra"><span>Outra</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_freq_compartilha">Com que frequência você compartilha conteúdos profissionais?</p>
+          <p class="dica">Escolha uma opção</p>
+          <div class="opcoes" role="radiogroup" aria-labelledby="p_freq_compartilha">
+          <label class="opcao"><input type="radio" id="freq_compartilha_0" name="freq_compartilha" value="Frequentemente"><span>Frequentemente</span></label>
+          <label class="opcao"><input type="radio" id="freq_compartilha_1" name="freq_compartilha" value="Às vezes"><span>Às vezes</span></label>
+          <label class="opcao"><input type="radio" id="freq_compartilha_2" name="freq_compartilha" value="Raramente"><span>Raramente</span></label>
+          <label class="opcao"><input type="radio" id="freq_compartilha_3" name="freq_compartilha" value="Nunca"><span>Nunca</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_motivo_compartilha">O que faz você compartilhar um conteúdo?</p>
+          <p class="dica">Assinale quantas quiser</p>
+          <div class="opcoes" role="group" aria-labelledby="p_motivo_compartilha">
+          <label class="opcao"><input type="checkbox" id="motivo_compartilha_0" name="motivo_compartilha" value="Explica algo de forma simples"><span>Explica algo de forma simples</span></label>
+          <label class="opcao"><input type="checkbox" id="motivo_compartilha_1" name="motivo_compartilha" value="Apresenta uma ideia nova"><span>Apresenta uma ideia nova</span></label>
+          <label class="opcao"><input type="checkbox" id="motivo_compartilha_2" name="motivo_compartilha" value="Representa algo que estou vivendo"><span>Representa algo que estou vivendo</span></label>
+          <label class="opcao"><input type="checkbox" id="motivo_compartilha_3" name="motivo_compartilha" value="Pode ajudar alguém da minha rede"><span>Pode ajudar alguém da minha rede</span></label>
+          <label class="opcao"><input type="checkbox" id="motivo_compartilha_4" name="motivo_compartilha" value="Traz uma solução prática"><span>Traz uma solução prática</span></label>
+          <label class="opcao"><input type="checkbox" id="motivo_compartilha_5" name="motivo_compartilha" value="É emocionante ou inspirador"><span>É emocionante ou inspirador</span></label>
+          <label class="opcao"><input type="checkbox" id="motivo_compartilha_6" name="motivo_compartilha" value="Tem uma frase forte"><span>Tem uma frase forte</span></label>
+          <label class="opcao"><input type="checkbox" id="motivo_compartilha_7" name="motivo_compartilha" value="Apresenta dados ou evidências"><span>Apresenta dados ou evidências</span></label>
+          <label class="opcao"><input type="checkbox" id="motivo_compartilha_8" name="motivo_compartilha" value="Foi produzido por alguém em quem confio"><span>Foi produzido por alguém em quem confio</span></label>
+          </div>
+        </div>
+        <div class="bloco-rodape">
+            <button type="button" class="btn-continuar">Continuar <span aria-hidden="true">&rarr;</span></button>
+          </div>
+        </div>
+      </details>
+      <details class="bloco">
+        <summary>
+          <span class="bloco-num"><span class="n">05</span><svg class="ok" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 10.5l4 4 8-9" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          <span class="bloco-titulo"><strong>Dados demográficos</strong><span class="sub">Perguntas opcionais</span><span class="aviso">Responda o bloco anterior para liberar</span></span>
+          <span class="bloco-icone" aria-hidden="true"></span>
+        </summary>
+        <div class="bloco-corpo">
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_faixa_etaria">Qual é sua faixa etária?</p>
+          <p class="dica">Escolha uma opção</p>
+          <div class="opcoes" role="radiogroup" aria-labelledby="p_faixa_etaria">
+          <label class="opcao"><input type="radio" id="faixa_etaria_0" name="faixa_etaria" value="Até 17 anos"><span>Até 17 anos</span></label>
+          <label class="opcao"><input type="radio" id="faixa_etaria_1" name="faixa_etaria" value="18 a 24 anos"><span>18 a 24 anos</span></label>
+          <label class="opcao"><input type="radio" id="faixa_etaria_2" name="faixa_etaria" value="25 a 34 anos"><span>25 a 34 anos</span></label>
+          <label class="opcao"><input type="radio" id="faixa_etaria_3" name="faixa_etaria" value="35 a 44 anos"><span>35 a 44 anos</span></label>
+          <label class="opcao"><input type="radio" id="faixa_etaria_4" name="faixa_etaria" value="45 a 54 anos"><span>45 a 54 anos</span></label>
+          <label class="opcao"><input type="radio" id="faixa_etaria_5" name="faixa_etaria" value="55 a 64 anos"><span>55 a 64 anos</span></label>
+          <label class="opcao"><input type="radio" id="faixa_etaria_6" name="faixa_etaria" value="65 anos ou mais"><span>65 anos ou mais</span></label>
+          <label class="opcao"><input type="radio" id="faixa_etaria_7" name="faixa_etaria" value="Prefiro não responder"><span>Prefiro não responder</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_genero">Qual é o seu gênero?</p>
+          <p class="dica">Escolha uma opção</p>
+          <div class="opcoes" role="radiogroup" aria-labelledby="p_genero">
+          <label class="opcao"><input type="radio" id="genero_0" name="genero" value="Homem"><span>Homem</span></label>
+          <label class="opcao"><input type="radio" id="genero_1" name="genero" value="Mulher"><span>Mulher</span></label>
+          <label class="opcao"><input type="radio" id="genero_2" name="genero" value="Não binário"><span>Não binário</span></label>
+          <label class="opcao"><input type="radio" id="genero_3" name="genero" value="Prefiro não informar"><span>Prefiro não informar</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_pronomes">Quais pronomes você utiliza?</p>
+          <p class="dica">Assinale quantas quiser</p>
+          <div class="opcoes" role="group" aria-labelledby="p_pronomes">
+          <label class="opcao"><input type="checkbox" id="pronomes_0" name="pronomes" value="Ele/dele"><span>Ele/dele</span></label>
+          <label class="opcao"><input type="checkbox" id="pronomes_1" name="pronomes" value="Ela/dela"><span>Ela/dela</span></label>
+          <label class="opcao"><input type="checkbox" id="pronomes_2" name="pronomes" value="Elu/delu"><span>Elu/delu</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <p class="pergunta-titulo" id="p_renda">Qual é sua faixa aproximada de renda mensal familiar?</p>
+          <p class="dica">Escolha uma opção</p>
+          <div class="opcoes" role="radiogroup" aria-labelledby="p_renda">
+          <label class="opcao"><input type="radio" id="renda_0" name="renda" value="Até 2 salários mínimos"><span>Até 2 salários mínimos</span></label>
+          <label class="opcao"><input type="radio" id="renda_1" name="renda" value="De 2 a 5 salários mínimos"><span>De 2 a 5 salários mínimos</span></label>
+          <label class="opcao"><input type="radio" id="renda_2" name="renda" value="De 5 a 10 salários mínimos"><span>De 5 a 10 salários mínimos</span></label>
+          <label class="opcao"><input type="radio" id="renda_3" name="renda" value="De 10 a 20 salários mínimos"><span>De 10 a 20 salários mínimos</span></label>
+          <label class="opcao"><input type="radio" id="renda_4" name="renda" value="Acima de 20 salários mínimos"><span>Acima de 20 salários mínimos</span></label>
+          <label class="opcao"><input type="radio" id="renda_5" name="renda" value="Prefiro não responder"><span>Prefiro não responder</span></label>
+          </div>
+        </div>
+          <div class="presente-destaque">
+            <strong class="presente-destaque-selo">Presente especial</strong>
+            <p>Preencha e ganhe o <strong>Workbook &ldquo;{{ presente_nome }}&rdquo;</strong>, um material exclusivo para a jornada profissional. O material será enviado pelo contato informado.</p>
+          </div>
+        <div class="pergunta">
+          <div class="opcoes coluna-unica" role="group">
+          <label class="opcao"><input type="checkbox" id="consentimento_dados" name="consentimento_dados" value="Concordo" required><span><strong>Concordo</strong> que minhas respostas sejam utilizadas para compreender o público do livro e orientar conteúdos, eventos e ações relacionadas à Gestão Conectiva.</span></label>
+          </div>
+        </div>
+        <div class="pergunta">
+          <div class="opcoes coluna-unica" role="group">
+          <label class="opcao"><input type="checkbox" id="consentimento_news" name="consentimento_news" value="Quero receber"><span><strong>Quero receber</strong> novidades sobre o livro, eventos, pesquisas e conteúdos de Gestão Conectiva por e-mail ou WhatsApp. <em>(Opcional: você pode responder sem aceitar mensagens promocionais.)</em></span></label>
+          </div>
+        </div>
+          {# FIM DA PARTE 1. Enquanto o questionário 2 estiver congelado (QUESTIONARIO_2_ATIVO = False no app.py),
+             aparece um botão só. Quando o cliente liberar a parte 2, voltam os dois caminhos. #}
+          <div class="fim-parte1">
+            {% if questionario2_ativo %}
+            <p class="fim-parte1-titulo">Obrigado por concluir a primeira parte!</p>
+            <p class="fim-parte1-texto">O presente chega no seu e-mail nas duas opções. Na próxima parte, vamos conhecer seus desafios profissionais, as competências que deseja desenvolver e seus hábitos de leitura, e você ganha uma videoaula exclusiva.</p>
+            <div class="fim-parte1-botoes">
+              <button type="submit" class="btn-enviar btn-enviar-sec" name="escolha_final" value="finalizar">Terminar e receber meu presente</button>
+              <button type="submit" class="btn-enviar" name="escolha_final" value="continuar">Continuar e ganhar uma videoaula <span aria-hidden="true">&rarr;</span></button>
+            </div>
+            {% else %}
+            <p class="fim-parte1-titulo">Obrigado por participar!</p>
+            <p class="fim-parte1-texto">Suas respostas ajudam a compreender melhor os leitores de &ldquo;Do Zero ao Possível!&rdquo; e a construir as nossas próximas conversas.</p>
+            <div class="fim-parte1-botoes">
+              <button type="submit" class="btn-enviar" name="escolha_final" value="finalizar">Enviar e receber meu presente <span aria-hidden="true">&rarr;</span></button>
+            </div>
+            {% endif %}
+          </div>
+        </div>
+      </details>
+
+        </form>
+    </div>

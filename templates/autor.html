@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre o Autor - Do Zero ao Possível</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=1.4">
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu.css') }}?v=1.7">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas.css') }}?v=1.0">
+</head>
+<body>
+
+<!-- MENU LATERAL (☰): para mudar os links, edite templates/_menu.html -->
+    {% include '_menu.html' %}
+
+    <!-- CONTEÚDO DA PÁGINA SOBRE O AUTOR -->
+    <header class="hero">
+        <div class="hero-imagem">
+            <img class="foto-autor" src="{{ url_for('static', filename='autor.jpg') }}" alt="Foto de Ivan de Souza Dutra" width="640" height="640">
+        </div>
+        <div class="hero-texto">
+            <h1>Ivan de Souza Dutra</h1>
+            <p class="texto-livro">Professor-pesquisador associado da Universidade Estadual de Londrina (UEL) desde 2003, doutor em Administração e pós-doutor em Administração.</p>
+            <p class="texto-livro">Antes da academia, construiu uma trajetória prática em tecnologia e gestão: programador, empreendedor, gerente de TI (CIO) e diretor geral de provedor de internet. Dessa vivência corporativa nasceu o olhar do livro: transformar competências humanas em alianças reais e crescimento sustentável.</p>
+            <p style="margin-top: 22px;">
+                <a class="botao-pilula" href="https://www.instagram.com/dr.ivandutra.gestaoconectiva/" target="_blank" rel="noopener">Instagram @dr.ivandutra.gestaoconectiva</a>
+            </p>
+        </div>
+    </header>
+
+    <!-- FIM DA PÁGINA: volta para o questionário -->
+    <section class="voltar-questionario">
+        <a class="botao-pilula" href="{{ url_for('capa') }}#questionario"><span aria-hidden="true">&larr;</span>&nbsp; Voltar ao questionário</a>
+    </section>
+
+</body>
+</html>

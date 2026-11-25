@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conheça o Livro - Do Zero ao Possível</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=1.4">
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu.css') }}?v=1.7">
+    <link rel="stylesheet" href="{{ url_for('static', filename='paginas.css') }}?v=1.0">
+</head>
+<body>
+
+<!-- MENU LATERAL (☰): para mudar os links, edite templates/_menu.html -->
+    {% include '_menu.html' %}
+
+    <!-- CONTEÚDO DA PÁGINA LIVRO -->
+    <header class="hero">
+        <div class="hero-imagem">
+            <img class="foto-livro" src="{{ url_for('static', filename='livro-mockup.jpg') }}" alt="Livro Do Zero ao Possível, de Ivan de Souza Dutra" width="960" height="1199">
+        </div>
+        <div class="hero-texto">
+            <h1>Do Zero ao Possível!</h1>
+            <h2>Soft Skills: a inteligência das relações humanas por trás dos grandes resultados nas organizações</h2>
+            <p class="texto-livro">A excelência técnica abre a porta. A inteligência das relações constrói o seu lugar.</p>
+            <p class="texto-livro">O livro revela quando as competências humanas deixam de ser um "extra" e se tornam o motor dos seus resultados nas organizações.</p>
+            <p class="texto-livro">Muito além da técnica pura, descubra como ler o ambiente e gerar valor real.</p>
+            <ul class="ficha">
+                <li>Editora Engenho das Letras</li>
+                <li>Livro físico</li>
+                <li>{{ preco_livro }}</li>
+            </ul>
+            <a class="botao-pilula" href="{{ link_loja }}">Garanta seu exemplar físico <span aria-hidden="true">&nbsp;&rarr;</span></a>
+        </div>
+    </header>
+
+
+    <!-- FIM DA PÁGINA: volta para o questionário -->
+    <section class="voltar-questionario">
+        <a class="botao-pilula" href="{{ url_for('capa') }}#questionario"><span aria-hidden="true">&larr;</span>&nbsp; Voltar ao questionário</a>
+    </section>
+
+</body>
+</html>

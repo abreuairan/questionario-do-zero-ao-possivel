@@ -1,0 +1,213 @@
+/* ============================================================
+   MENU LATERAL (☰)
+
+   Funciona igual no PC e no celular.
+   Os links ficam em templates/_menu.html (um só lugar para todas as páginas).
+   ============================================================ */
+
+/* trava a rolagem da página enquanto o menu está aberto */
+html.menu-aberto { overflow: hidden; }
+
+/* páginas internas (livro, autor) não têm barra no topo: dá espaço para o botão ☰ */
+body > header.hero { padding-top: 76px; }
+
+/* ---------- botão redondo de 3 riscos ---------- */
+.menu-botao {
+    position: fixed;
+    top: 5px;
+    left: 6px;
+    z-index: 1100;
+    box-sizing: border-box;
+    width: 42px;
+    height: 42px;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    background: #F2CD5C;
+    border: 2px solid #0D0D0D;      /* a borda preta garante que ele apareça sobre o fundo amarelo */
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(13, 13, 13, 0.25);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: background-color 0.2s ease, transform 0.12s ease;
+}
+
+/* área de toque maior que o desenho (mais fácil de acertar com o dedo) */
+.menu-botao::after {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border-radius: 50%;
+}
+
+.menu-botao span {
+    display: block;
+    width: 18px;
+    height: 3px;
+    border-radius: 2px;
+    background: #0D0D0D;
+}
+
+.menu-botao:active { transform: scale(0.92); }
+.menu-botao:focus-visible { outline: 3px solid #0D0D0D; outline-offset: 3px; }
+
+@media (hover: hover) {
+    .menu-botao:hover { background: #ffffff; }
+}
+
+/* ---------- fundo escurecido ---------- */
+.menu-fundo {
+    position: fixed;
+    inset: 0;
+    z-index: 1200;
+    background: rgba(13, 13, 13, 0.55);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+html.menu-aberto .menu-fundo {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease;
+}
+
+/* ---------- painel lateral ---------- */
+.menu-lateral {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1300;
+    width: min(86vw, 340px);
+    box-sizing: border-box;
+    overflow-y: auto;
+    background: #F2CD5C;
+    border-radius: 0 24px 24px 0;
+    box-shadow: 10px 0 30px rgba(13, 13, 13, 0.25);
+    transform: translateX(-105%);
+    visibility: hidden;
+    transition: transform 0.3s ease, visibility 0s linear 0.3s;
+}
+
+html.menu-aberto .menu-lateral {
+    transform: none;
+    visibility: visible;
+    transition: transform 0.3s ease;
+}
+
+.menu-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 52px;
+    padding: 0 8px 0 28px;
+    border-bottom: 3px solid #0D0D0D;
+}
+
+.menu-rotulo {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #0D0D0D;
+}
+
+.menu-fechar {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: #0D0D0D;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.12s ease;
+}
+
+.menu-fechar:active { transform: scale(0.9); }
+.menu-fechar:focus-visible { outline: 3px solid #0D0D0D; outline-offset: 2px; }
+
+@media (hover: hover) {
+    .menu-fechar:hover { background: #0D0D0D; color: #F2CD5C; }
+}
+
+/* ---------- links ---------- */
+.menu-links {
+    list-style: none;
+    margin: 0;
+    padding: 8px 28px 32px;
+}
+
+.menu-links li { margin: 0; padding: 0; }
+
+.menu-links a {
+    display: block;
+    padding: 18px 0;
+    border-bottom: 1px solid rgba(13, 13, 13, 0.28);
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 1.2rem;
+    letter-spacing: -0.01em;
+    color: #0D0D0D;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: padding-left 0.2s ease;
+}
+
+.menu-links a:focus-visible { outline: 3px solid #0D0D0D; outline-offset: 2px; }
+
+/* página em que você está */
+.menu-links a[aria-current="page"] {
+    padding-left: 16px;
+    box-shadow: inset 5px 0 0 #0D0D0D;
+}
+
+/* "Responda o questionário →" em destaque, em formato de pílula */
+.menu-links a.menu-destaque {
+    margin-top: 28px;
+    padding: 18px 22px;
+    border-bottom: 0;
+    border-radius: 999px;
+    background: #0D0D0D;
+    color: #F2CD5C;
+    font-size: 0.92rem;
+    letter-spacing: 0.1em;
+    text-align: center;
+    text-transform: uppercase;
+    transition: transform 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.menu-links a.menu-destaque:active { transform: scale(0.96); }
+
+.menu-links a.menu-destaque .seta {
+    display: inline-block;
+    margin-left: 8px;
+    transition: transform 0.2s ease;
+}
+
+@media (hover: hover) {
+    .menu-links a:hover { padding-left: 8px; }
+    .menu-links a.menu-destaque:hover { padding-left: 22px; background: #ffffff; color: #0D0D0D; }
+    .menu-links a.menu-destaque:hover .seta { transform: translateX(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .menu-botao, .menu-fundo, .menu-lateral, .menu-fechar, .menu-links a, .menu-links a .seta {
+        transition: none !important;
+    }
+}

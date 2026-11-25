@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Obrigado | Do Zero ao Possível</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=1.4">
+    <link rel="stylesheet" href="{{ url_for('static', filename='obrigado.css') }}?v=1.4">
+</head>
+<body>
+    <main class="obrigado">
+        <div class="obrigado-conteudo">
+            <div class="obrigado-check" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#0D0D0D" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+            </div>
+            <span class="obrigado-selo">Do Zero ao Possível</span>
+            <h1>Obrigado por responder!</h1>
+            <p>Suas respostas ajudam a compreender melhor os leitores de &ldquo;Do Zero ao Possível!&rdquo; e a construir as nossas próximas conversas.</p>
+
+            {# PRESENTE: o PDF é enviado por e-mail pelo Apps Script (veja apps_script_planilha.gs). #}
+            <div class="presente">
+                <span class="presente-rotulo">Um presente para você</span>
+                <p class="presente-texto">Enviamos o Workbook <strong>&ldquo;{{ presente_nome }}&rdquo;</strong>, um material exclusivo para a sua jornada profissional, para o contato que você informou.</p>
+                <small class="presente-regra">Não chegou em alguns minutos? Olhe também a caixa de spam ou promoções.</small>
+            </div>
+
+            <div class="obrigado-botoes">
+                <a class="obrigado-botao principal" href="{{ link_loja }}">Conheça o livro físico <span class="seta" aria-hidden="true">&rarr;</span></a>
+                <a class="obrigado-botao secundario" href="{{ url_for('capa') }}">Início</a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

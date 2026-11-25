@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex">
+    <title>Sua videoaula | Do Zero ao Possível</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=1.4">
+    <link rel="stylesheet" href="{{ url_for('static', filename='obrigado.css') }}?v=1.4">
+</head>
+<body>
+    <main class="obrigado">
+        <div class="obrigado-conteudo videoaula-conteudo">
+            <span class="obrigado-selo">Do Zero ao Possível</span>
+            <h1>Sua videoaula está liberada</h1>
+            {% if video_link %}
+                <p>Obrigado por responder as duas partes! Esta aula é exclusiva para quem participou.</p>
+                <p><small>Se você autorizou o depoimento em vídeo, também entraremos em contato para combinar.</small></p>
+                {% if video_url %}
+                <div class="video-moldura">
+                    <iframe src="{{ video_url }}" title="Videoaula exclusiva" loading="lazy"
+                            allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                            allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>
+                </div>
+                {% endif %}
+                <div class="obrigado-botoes">
+                    <a class="obrigado-botao principal" href="{{ video_link }}" target="_blank" rel="noopener">Abrir no YouTube <span class="seta" aria-hidden="true">&rarr;</span></a>
+                    <a class="obrigado-botao secundario" href="{{ url_for('capa') }}">Início</a>
+                </div>
+                {% if workbook_link %}
+                <div class="obrigado-botoes">
+                    <a class="obrigado-botao secundario" href="{{ workbook_link }}" target="_blank" rel="noopener">Abrir meu workbook <span class="seta" aria-hidden="true">&rarr;</span></a>
+                </div>
+                {% endif %}
+                <div class="presente">
+                    <small class="presente-regra">Também enviamos {% if workbook_link %}a aula e o workbook, em e-mails separados,{% else %}o link da aula{% endif %} para o seu e-mail. Não compartilhe: é só para quem respondeu.</small>
+                </div>
+            {% else %}
+                <p>Obrigado por responder as duas partes! A videoaula está sendo finalizada e vamos avisar você por e-mail assim que estiver no ar.</p>
+                <p><small>Se você autorizou o depoimento em vídeo, também entraremos em contato para combinar.</small></p>
+                <div class="obrigado-botoes">
+                    <a class="obrigado-botao principal" href="{{ url_for('capa') }}">Início</a>
+                </div>
+            {% endif %}
+        </div>
+    </main>
+</body>
+</html>

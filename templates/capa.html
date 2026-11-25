@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Participe do questionário</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,700;1,400&family=Montserrat:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=1.4">
+    <link rel="stylesheet" href="{{ url_for('static', filename='menu.css') }}?v=1.7">
+    <link rel="stylesheet" href="{{ url_for('static', filename='capa.css') }}?v=2.1">
+    <link rel="stylesheet" href="{{ url_for('static', filename='questionario.css') }}?v=2.0">
+</head>
+<body>
+
+    <!-- MENU LATERAL (☰): para mudar os links, edite templates/_menu.html -->
+    {% include '_menu.html' %}
+
+    <!-- 1) CAPA: a primeira coisa que a pessoa vê -->
+    <header class="capa" id="inicio">
+        <!-- espaço para a arte do designer: veja o comentário em static/capa.css -->
+        <div class="capa-arte" aria-hidden="true"></div>
+
+        <div class="capa-conteudo">
+            <p class="capa-selo">Do Zero ao Possível</p>
+            <h1 class="capa-titulo">Não é sobre impor,<br>é sobre conectar.</h1>
+            <p class="capa-frase">A excelência técnica abre a porta. A inteligência das relações constrói o seu lugar.</p>
+            <div class="capa-livro">
+                <strong>Sobre o livro</strong>
+                O livro revela quando as competências humanas deixam de ser um "extra" e se tornam o motor dos seus resultados nas organizações. Muito além da técnica pura, descubra como ler o ambiente e gerar valor real.
+                <a class="capa-livro-link" href="{{ link_loja }}">Garanta seu exemplar físico <span class="seta" aria-hidden="true">&rarr;</span></a>
+            </div>
+            {# Botão com texto NEUTRO: serve para quem já tem o livro e para quem ainda não tem.
+               A pergunta sobre a relação com o livro (bloco 02) separa os dois. #}
+            <a class="btn-pilula btn-cupom-capa" href="#questionario">Responda o questionário <span class="seta" aria-hidden="true">&darr;</span></a>
+            <p class="capa-cupom">Quem responde ganha um <strong>presente por e-mail</strong>: o Workbook &ldquo;{{ presente_nome }}&rdquo;.</p>
+        </div>
+
+        <a class="capa-rolar" href="#questionario" tabindex="-1" aria-hidden="true"><span></span></a>
+    </header>
+
+    <!-- 2) QUESTIONÁRIO: o conteúdo vem do arquivo templates/_questionario.html -->
+    <section id="questionario" class="pagina-questionario">
+{% include '_questionario.html' %}
+    </section>
+
+    <script src="{{ url_for('static', filename='questionario.js') }}?v=2.2" defer></script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+/* ============================================================
+   Páginas "Conheça o livro" e "Sobre o autor"
+   (fotos reais, destaques e linha do tempo)
+   ============================================================ */
+
+/* foto do livro / do autor dentro da área à esquerda */
+.foto-livro, .foto-autor {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin-left: auto;          /* encosta à direita no PC, como o espaço provisório */
+}
+.foto-livro {
+    width: 350px;
+    border-radius: 18px;
+    box-shadow: -15px 15px 0 #0D0D0D;
+}
+.foto-autor {
+    width: 350px;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 18px;
+    box-shadow: 15px 15px 0 #F2CD5C;
+}
+@media (max-width: 700px) {
+    .hero-imagem { text-align: center; padding-right: 0; margin-bottom: 36px; }
+    .foto-livro, .foto-autor { margin-left: auto; margin-right: auto; width: min(80%, 320px); }
+    .hero-texto h1 { font-size: 2.6rem; }
+}
+
+.texto-livro { font-family: 'Lora', serif; font-size: 1.1rem; line-height: 1.7; margin: 0 0 14px; }
+
+/* selos: editora, formato, preço */
+.ficha { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 26px; padding: 0; list-style: none; }
+.ficha li {
+    padding: 9px 16px; border-radius: 999px; background: #F2CD5C; color: #0D0D0D;
+    font-family: 'Montserrat', sans-serif; font-weight: 700; font-size: 0.8rem;
+}
+
+/* botão pílula (mesmo estilo do resto do site) */
+.botao-pilula {
+    display: inline-flex; align-items: center; justify-content: center;
+    min-height: 54px; padding: 0 30px; border-radius: 999px;
+    background: #0D0D0D; color: #F2CD5C; text-decoration: none;
+    font-family: 'Montserrat', sans-serif; font-weight: 800; font-size: 0.85rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    transition: transform 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+.botao-pilula:active { transform: scale(0.96); }
+.botao-pilula:focus-visible { outline: 3px solid #0D0D0D; outline-offset: 3px; }
+@media (hover: hover) { .botao-pilula:hover { background: #ffffff; color: #0D0D0D; } }
+
+/* botão final "Voltar ao questionário" */
+.voltar-questionario { padding: 48px 10% 64px; text-align: center; background: #F2F0EB; }

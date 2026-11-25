@@ -1,0 +1,244 @@
+/* ============================================================
+   CAPA - a abertura do site, em tela cheia
+
+   É uma capa PROVISÓRIA, só um ponto de partida para o designer.
+   Para colocar uma arte (imagem) no fundo, veja o bloco ".capa-arte" abaixo.
+   ============================================================ */
+
+/* clicar num link que termina em #algo rola a página com suavidade até lá */
+html { scroll-behavior: smooth; }
+
+.capa {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    min-height: 100vh;               /* navegadores antigos */
+    min-height: 100svh;              /* celulares: ignora a barra de endereço que sobe e desce */
+    padding: 88px 24px 100px;        /* o espaço de cima é para o botão ☰ */
+    overflow: hidden;
+    text-align: center;
+    color: #0D0D0D;
+    /* fundo amarelo com dois círculos suaves (formas redondas combinam com os botões) */
+    background:
+        radial-gradient(circle at 88% 10%, #F7DE8E 0 120px, transparent 121px),
+        radial-gradient(circle at 6% 92%, #E9BF47 0 170px, transparent 171px),
+        #F2CD5C;
+}
+
+/* ESPAÇO PARA A ARTE DO DESIGNER:
+   para usar uma imagem, escreva na linha abaixo, por exemplo:
+       --capa-imagem: url('/static/capa.jpg');
+   (a imagem precisa estar na pasta static) */
+.capa-arte {
+    --capa-imagem: none;
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background-image: var(--capa-imagem);
+    background-size: cover;
+    background-position: center;
+}
+
+.capa-conteudo {
+    position: relative;
+    z-index: 1;
+    max-width: 640px;
+}
+
+/* etiqueta redonda com o nome do livro */
+.capa-selo {
+    display: inline-block;
+    margin: 0 0 22px;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: #0D0D0D;
+    color: #F2CD5C;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    line-height: 1;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+.capa-titulo {
+    margin: 0 0 20px;
+    font-family: 'Lora', serif;
+    font-weight: 700;
+    font-size: clamp(2.5rem, 10vw, 4.75rem);   /* cresce com a tela, mas tem mínimo e máximo */
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+}
+
+.capa-frase {
+    margin: 0 0 24px;
+    font-family: 'Lora', serif;
+    font-size: clamp(1.05rem, 3.6vw, 1.3rem);
+    line-height: 1.55;
+}
+
+/* destaque sobre o livro (cantos arredondados, sem moldura) */
+.capa-livro {
+    margin: 0 0 34px;
+    padding: 18px 20px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.5);
+    font-family: 'Lora', serif;
+    font-size: 0.98rem;
+    line-height: 1.6;
+    text-align: left;
+}
+
+.capa-livro strong {
+    display: block;
+    margin-bottom: 6px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+}
+
+/* ---------- botão de ação em formato de pílula ---------- */
+.btn-pilula {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    min-height: 58px;                 /* altura boa para o dedo (o mínimo recomendado é ~48px) */
+    padding: 0 34px;
+    border-radius: 999px;             /* número enorme = cantos 100% redondos */
+    background: #0D0D0D;
+    color: #F2CD5C;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    line-height: 1;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 8px 20px rgba(13, 13, 13, 0.2);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-pilula .seta { display: inline-block; transition: transform 0.2s ease; }
+
+/* efeito de "apertar": ao tocar, o botão encolhe um pouquinho */
+.btn-pilula:active { transform: scale(0.96); }
+
+.btn-pilula:focus-visible { outline: 3px solid #0D0D0D; outline-offset: 4px; }
+
+/* "hover" (passar o mouse) só existe em telas com mouse; no celular o toque deixaria o efeito "preso" */
+@media (hover: hover) {
+    .btn-pilula:hover { background: #ffffff; color: #0D0D0D; }
+    .btn-pilula:hover .seta { transform: translateY(3px); }
+}
+
+/* ---------- indicador "role para continuar" ---------- */
+.capa-rolar {
+    position: absolute;
+    left: 50%;
+    bottom: 22px;
+    z-index: 1;
+    width: 28px;
+    height: 46px;
+    margin-left: -14px;
+    box-sizing: border-box;
+    border: 2px solid #0D0D0D;
+    border-radius: 999px;
+    opacity: 0.7;
+}
+
+.capa-rolar span {
+    position: absolute;
+    left: 50%;
+    top: 8px;
+    width: 4px;
+    height: 10px;
+    margin-left: -2px;
+    border-radius: 2px;
+    background: #0D0D0D;
+    animation: capa-rolar 1.7s ease-in-out infinite;
+}
+
+@keyframes capa-rolar {
+    0%   { transform: translateY(0);    opacity: 1; }
+    70%  { transform: translateY(14px); opacity: 0; }
+    100% { transform: translateY(0);    opacity: 0; }
+}
+
+/* ---------- entrada suave: cada item sobe e aparece, um depois do outro ---------- */
+@keyframes capa-subir {
+    from { opacity: 0; transform: translateY(18px); }
+    to   { opacity: 1; transform: none; }
+}
+
+.capa-conteudo > * { animation: capa-subir 0.7s ease-out backwards; }
+.capa-conteudo > :nth-child(2) { animation-delay: 0.08s; }
+.capa-conteudo > :nth-child(3) { animation-delay: 0.16s; }
+.capa-conteudo > :nth-child(4) { animation-delay: 0.24s; }
+.capa-conteudo > :nth-child(5) { animation-delay: 0.32s; }
+
+@media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .capa-conteudo > *, .capa-rolar span { animation: none; }
+    .btn-pilula, .btn-pilula .seta { transition: none; }
+}
+
+/* link para a loja, dentro do quadro "Sobre o livro" */
+.capa-livro-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 14px;
+    min-height: 44px;
+    padding: 0 20px;
+    border: 2px solid #0D0D0D;
+    border-radius: 999px;
+    color: #0D0D0D;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 800;
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    transition: transform 0.15s ease, background-color 0.2s ease, color 0.2s ease;
+}
+.capa-livro-link .seta { margin-left: 8px; transition: transform 0.2s ease; }
+.capa-livro-link:active { transform: scale(0.96); }
+.capa-livro-link:focus-visible { outline: 3px solid #0D0D0D; outline-offset: 3px; }
+@media (hover: hover) {
+    .capa-livro-link:hover { background: #0D0D0D; color: #F2CD5C; }
+    .capa-livro-link:hover .seta { transform: translateX(4px); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .capa-livro-link, .capa-livro-link .seta { transition: none; }
+}
+
+/* ---------- chamada do cupom (linha discreta abaixo do botão) ---------- */
+.capa-cupom {
+    margin: 14px 0 0;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: #4A473D;              /* cinza quente: aparece, mas não grita */
+}
+.capa-cupom strong {
+    font-style: normal;
+    font-weight: 700;
+    color: #0D0D0D;
+}
+
+/* botão da capa com texto mais longo: deixa quebrar em 2 linhas sem apertar */
+.btn-cupom-capa {
+    max-width: 100%;
+    padding: 14px 30px;
+    line-height: 1.35;
+    text-align: center;
+}
