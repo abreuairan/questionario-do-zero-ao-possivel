@@ -1,14 +1,14 @@
-# 📖 Questionário "Do Zero ao Possível"
+# Questionário "Do Zero ao Possível"
 
 Site de pesquisa de leitores para o livro **"Do Zero ao Possível! Soft Skills: a inteligência das relações humanas por trás dos grandes resultados nas organizações"**, de Ivan de Souza Dutra.
 
 Quem responde ao questionário recebe um material de presente, e as respostas chegam organizadas numa planilha para o autor conhecer melhor o seu público.
 
-🔗 **Site no ar:** https://questionario-m0rl.onrender.com
+**Site no ar:** https://questionario-m0rl.onrender.com
 
 ---
 
-## 📱 Telas
+## Telas
 
 Feito primeiro para o celular (*mobile first*):
 
@@ -18,7 +18,7 @@ Feito primeiro para o celular (*mobile first*):
 
 ---
 
-## ✨ Funcionalidades
+## Funcionalidades
 
 - **Questionário em 5 blocos** com barra de progresso ("Bloco 1 de 5") e uma **segunda parte opcional**
 - **Validação dos campos** no navegador e no servidor (e-mail, WhatsApp com DDD, campos obrigatórios)
@@ -29,7 +29,7 @@ Feito primeiro para o celular (*mobile first*):
 - **Menu lateral** e visual próprio, com fundo de "conexões" que conversa com o tema do livro
 - **Integração com a loja do livro** ([ver projeto](../loja-do-zero-ao-possivel))
 
-## 🔐 Segurança e cuidado com os dados
+## Segurança e cuidado com os dados
 
 - Nenhuma senha ou chave fica no código: tudo em **variáveis de ambiente** no servidor
 - **Proteção contra robôs**: campo-armadilha invisível e tempo mínimo de preenchimento
@@ -38,7 +38,7 @@ Feito primeiro para o celular (*mobile first*):
 - Cabeçalhos de segurança nas respostas do servidor
 - Os dados das pessoas **nunca** vão para o repositório
 
-## 🛠️ Tecnologias
+## Tecnologias
 
 | Parte | O que usei |
 |---|---|
@@ -50,7 +50,7 @@ Feito primeiro para o celular (*mobile first*):
 
 ---
 
-## 📂 O que tem neste repositório
+## O que tem neste repositório
 
 Este é um **repositório-vitrine**: ele mostra a parte visual do projeto (o que roda no navegador).
 
@@ -62,7 +62,7 @@ prints/      capturas de tela do site
 
 O **back-end** (servidor em Flask, integração com a planilha e o envio de e-mails) é **privado**, porque lida com dados pessoais dos participantes. Por isso o projeto não roda só com estes arquivos. Para ver funcionando, acesse o [site no ar](https://questionario-m0rl.onrender.com).
 
-## 💡 O que aprendi
+## O que aprendi
 
 - Montar um formulário longo sem cansar quem responde (blocos, progresso, textos curtos)
 - Validar dados dos dois lados: no navegador (para ajudar) e no servidor (para proteger)
@@ -72,6 +72,6 @@ O **back-end** (servidor em Flask, integração com a planilha e o envio de e-ma
 
 ---
 
-👤 Desenvolvido por **Airan Abreu Tavares** · [@abreuairan](https://github.com/abreuairan)
+Desenvolvido por **Airan Abreu Tavares** · [@abreuairan](https://github.com/abreuairan)
 
 Projeto feito para um cliente e publicado aqui com autorização. © Todos os direitos reservados: o código pode ser visto para avaliação, mas não pode ser copiado ou reutilizado sem permissão.
