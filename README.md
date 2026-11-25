@@ -1,5 +1,7 @@
 # Questionário "Do Zero ao Possível"
 
+> **A pergunta central:** como um autor pode conhecer de verdade quem se interessa pelo seu livro (perfil, desafios e interesses) e fazer as pessoas quererem responder uma pesquisa longa até o fim?
+
 Site de pesquisa de leitores para o livro **"Do Zero ao Possível! Soft Skills: a inteligência das relações humanas por trás dos grandes resultados nas organizações"**, de Ivan de Souza Dutra.
 
 Quem responde ao questionário recebe um material de presente, e as respostas chegam organizadas numa planilha para o autor conhecer melhor o seu público.
@@ -27,7 +29,30 @@ Feito primeiro para o celular (*mobile first*):
 - **Respostas vão direto para uma planilha Google**, prontas para análise
 - **Páginas extras**: sobre o livro, sobre o autor e videoaula
 - **Menu lateral** e visual próprio, com fundo de "conexões" que conversa com o tema do livro
-- **Integração com a loja do livro** ([ver projeto](../loja-do-zero-ao-possivel))
+- **Integração com a loja do livro** ([ver projeto](https://github.com/abreuairan/loja-do-zero-ao-possivel))
+
+## Como uma resposta funciona
+
+```mermaid
+flowchart TD
+    A[Visitante chega pela capa] --> B[Lê o aviso de privacidade - LGPD]
+    B --> C[Responde os 5 blocos, com barra de progresso]
+    C --> D[Servidor valida os dados e checa se não é robô]
+    D --> E[Resposta vai para a planilha do autor]
+    E --> F[Presente enviado por e-mail]
+    F --> G[Convite para a parte 2, a videoaula e a loja do livro]
+```
+
+## Decisões e por quê
+
+| Decisão | Por quê |
+|---|---|
+| Dividir em 5 blocos com barra de progresso | Um formulário enorme numa tela só assusta. Em blocos, a pessoa vê que está avançando e chega ao fim |
+| Dar um presente para quem responde | Um motivo concreto para responder tudo, e não abandonar na metade |
+| Validar no navegador **e** no servidor | No navegador para ajudar quem está digitando. No servidor porque o navegador pode ser burlado |
+| Campo-armadilha invisível contra robôs | Pessoas não veem o campo e deixam vazio; robôs preenchem tudo e são barrados, sem precisar de CAPTCHA chato |
+| Links de acesso assinados e com validade | Só quem respondeu de verdade consegue abrir o presente e a videoaula. Ninguém consegue "inventar" o link |
+| Respostas numa planilha Google | O autor analisa os dados sozinho, no formato que já conhece |
 
 ## Segurança e cuidado com os dados
 
